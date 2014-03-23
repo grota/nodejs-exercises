@@ -1,8 +1,9 @@
 var http = require('http')
+var bl = require('bl')
 var url = process.argv[2];
 http.get(url, function(res) {
-  res.setEncoding('utf8');
-  res.on('data', function (chunk) {
-    console.log(chunk);
-  });
+  res.pipe(bl( function(err, data) {
+    console.log( data.length);
+    console.log( data.toString());
+  } ));
 });

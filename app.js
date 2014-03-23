@@ -1,5 +1,5 @@
-var argv = process.argv;
-argv.shift(); argv.shift();
-console.log(argv.reduce(function(prev, current, index, array) {
-  return Number(prev)+Number(current);
-}));
+var fs = require('fs')
+var fname = process.argv[2];
+var contents = fs.readFileSync(fname);
+var lines = contents.toString().split('\n');
+console.log(lines.length-1);

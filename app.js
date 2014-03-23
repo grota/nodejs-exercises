@@ -1,6 +1,12 @@
 var fs = require('fs')
-var fname = process.argv[2];
-fs.readFile(fname, {encoding: 'utf8'}, function (err, data) {
-  var lines = data.split('\n');
-  console.log(lines.length-1);
+var dir = process.argv[2];
+var ext = process.argv[3];
+fs.readdir(dir, function (err, files) {
+  var filtered_list = files.filter(function(elem){
+    var parts = elem.split('.');
+    if (parts.length < 2) return false;
+    var file_ext = parts.pop();
+    return file_ext === ext;
+  });
+  console.log(filtered_list.join('\n'));
 });

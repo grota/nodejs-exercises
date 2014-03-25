@@ -1,10 +1,11 @@
 var http = require('http');
-var fs = require('fs');
 var port = process.argv[2];
-var file = process.argv[3];
 var s = http.createServer(function(req,res) {
-  fs.readFile(file, function (err, datafile) {
-    res.end(datafile);
+  req.on('data', function(chunk){
+    res.write(chunk.toString().toUpperCase());
   });
+  req.on('end', function() {
+    res.end('');
+  })
 });
 s.listen(port);

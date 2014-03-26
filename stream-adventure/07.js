@@ -1,13 +1,10 @@
-//var through = require('through');
+var through = require('through');
 var http = require('http');
 var server = http.createServer(function (req, res) {
   if (req.method === 'POST') {
-    req.on('data', function (chunk) {
-      res.write(chunk.toString().toUpperCase());
-    });
-    req.on('end', function() {
-      res.end();
-    })
+    req.pipe(through(function(buf){
+      this.queue(buf.toString().toUpperCase());
+    })).pipe(res)
   }
 });
 server.listen(process.argv[2]);
